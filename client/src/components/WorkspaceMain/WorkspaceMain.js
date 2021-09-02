@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import { Edit, Delete } from '@material-ui/icons';
 import PropTypes from 'prop-types';
+
 import { requestDeleteUser, requestGetUser } from '../../store/api';
 
 const useStyles = makeStyles({

@@ -19,7 +19,7 @@ import { requestCreateUser } from '../../store/api';
 
 const useStyles = makeStyles(({
     container: {
-        padding: '25px',
+        padding: 25,
     },
 }));
 

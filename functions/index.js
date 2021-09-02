@@ -13,7 +13,7 @@ const db = admin.firestore();
 
 // get all
 app.get('/', async (req, res) => {
-  const snapshot = await db.collection('users').orderBy('time', 'desc').get();
+  const snapshot = await db.collection('users').get();
   const users = [];
 
   snapshot.forEach((doc) => {
@@ -40,7 +40,7 @@ app.post('/', async (req, res) => {
   const user = req.body;
   await db.collection('users').add({
     ...user,
-    time: admin.firestore.FieldValue.serverTimestamp(),
+    createdAt: admin.firestore.Timestamp.fromDate(),
   });
   res.status(201).send();
 });

@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles({
     root: {
         border: '1px solid #ccc',
-        padding: '10px',
+        padding: 15,
     },
 });
 
