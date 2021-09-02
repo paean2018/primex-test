@@ -14,7 +14,7 @@ import {
     Box,
 } from '@material-ui/core';
 
-import { organisationFeatures, roleType } from '../../utils/constants';
+import { countries, organisationFeatures, roleType } from '../../utils/constants';
 import { requestEditUser } from '../../store/api';
 import { resetRequestStatus } from '../../store/actions';
 
@@ -32,7 +32,7 @@ const EditUserModal = ({ openEditModal, setOpenEditModal }) => {
         firstName: '',
         lastName: '',
         email: '',
-        role: 'Owner',
+        role: '',
         organisation: '',
         organisation_features: [],
         country: '',
@@ -60,7 +60,7 @@ const EditUserModal = ({ openEditModal, setOpenEditModal }) => {
 
     return (
         <div>
-            {user ? (
+            {data ? (
                 <Dialog
                     onClose={handleClose}
                     open={openEditModal}
@@ -69,6 +69,7 @@ const EditUserModal = ({ openEditModal, setOpenEditModal }) => {
                         <form onSubmit={handleSubmit}>
                             <div>
                                 <TextField
+                                    type="email"
                                     label="Email"
                                     onChange={handleData}
                                     name="email"
@@ -122,7 +123,7 @@ const EditUserModal = ({ openEditModal, setOpenEditModal }) => {
                                     </Select>
                                 </FormControl>
                             </Box>
-                            <Box display="flex">
+                            <Box display="flex" paddingTop={2}>
                                 <FormControl fullWidth>
                                     <InputLabel>Role</InputLabel>
                                     <Select
@@ -140,15 +141,23 @@ const EditUserModal = ({ openEditModal, setOpenEditModal }) => {
                                         })}
                                     </Select>
                                 </FormControl>
-                                <TextField
-                                    label="Country"
-                                    onChange={handleData}
-                                    name="country"
-                                    value={data.country}
-                                    fullWidth
-                                    required
-                                />
-
+                                <FormControl fullWidth>
+                                    <InputLabel>Country</InputLabel>
+                                    <Select
+                                        value={data.country}
+                                        onChange={handleData}
+                                        name="country"
+                                        required
+                                    >
+                                        {countries.map((cntry) => {
+                                            return (
+                                                <MenuItem key={cntry} value={cntry}>
+                                                    {cntry}
+                                                </MenuItem>
+                                            );
+                                        })}
+                                    </Select>
+                                </FormControl>
                             </Box>
                             <Box paddingTop={5} textAlign="end">
                                 <Button

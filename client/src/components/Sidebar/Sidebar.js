@@ -5,7 +5,6 @@ const useStyles = makeStyles({
     root: {
         borderRight: '1px solid #ccc',
         height: '100%',
-        padding: '10px',
     },
 });
 

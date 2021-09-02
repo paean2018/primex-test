@@ -4,12 +4,12 @@ import { AppBar } from '@material-ui/core';
 
 const useStyles = makeStyles(({
     root: {
-        background: '#fff',
-        borderBottom: '1px solid #ccc',
-        padding: '10px',
         display: 'flex',
+        height: 50,
+        justifyContent: 'center',
+        padding: 10,
+        background: '#fff',
         color: '#000',
-        height: '50px',
         '& p': {
             margin: 0,
         },

@@ -17,11 +17,18 @@ import { requestDeleteUser, requestGetUser } from '../../store/api';
 
 const useStyles = makeStyles({
     root: {
-        padding: '8px',
+        padding: 8,
         flex: 1,
+        '& .MuiTableContainer-root': {
+            height: '70vh',
+            overflowY: 'auto',
+        },
     },
     actionIcon: {
         cursor: 'pointer',
+    },
+    capitalizeText: {
+        textTransform: 'capitalize',
     },
 });
 
@@ -29,7 +36,7 @@ const WorkspaceMain = ({ users, setOpenEditModal }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(3);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const handleGetUser = (userId) => {
         dispatch(requestGetUser(userId));
@@ -57,14 +64,16 @@ const WorkspaceMain = ({ users, setOpenEditModal }) => {
         if (users.length > 0) {
             return users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user) => (
                 <TableRow key={user.id}>
-                    <TableCell component="th" scope="row">
+                    <TableCell component="th" scope="row" className={classes.capitalizeText}>
                         {`${user.firstName} ${user.lastName}`}
                     </TableCell>
                     <TableCell>{user.email}</TableCell>
-                    <TableCell>{user.role}</TableCell>
-                    <TableCell>{user.organisation}</TableCell>
-                    <TableCell>{`${user.organisation_features} `}</TableCell>
-                    <TableCell>{user.country}</TableCell>
+                    <TableCell className={classes.capitalizeText}>{user.role}</TableCell>
+                    <TableCell className={classes.capitalizeText}>{user.organisation}</TableCell>
+                    <TableCell className={classes.capitalizeText}>
+                        {`${user.organisation_features} `}
+                    </TableCell>
+                    <TableCell className={classes.capitalizeText}>{user.country}</TableCell>
                     <TableCell>
                         <Edit
                             className={classes.actionIcon}
@@ -80,7 +89,9 @@ const WorkspaceMain = ({ users, setOpenEditModal }) => {
         }
         return (
             <TableRow>
-                <TableCell>No users found.</TableCell>
+                <TableCell colSpan="7">
+                    No users found.
+                </TableCell>
             </TableRow>
         );
     };

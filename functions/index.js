@@ -38,7 +38,10 @@ app.get('/:id', async (req, res) => {
 // create
 app.post('/', async (req, res) => {
   const user = req.body;
-  await db.collection('users').add(user);
+  await db.collection('users').add({
+    ...user,
+    time: admin.firestore.FieldValue.serverTimestamp(),
+  });
   res.status(201).send();
 });
 

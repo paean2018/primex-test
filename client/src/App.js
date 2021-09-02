@@ -10,11 +10,13 @@ import WorkspaceMain from './components/WorkspaceMain/WorkspaceMain';
 import WorkspaceHeader from './components/WorkspaceHeader/WorkspaceHeader';
 import AddUserModal from './components/FormModal/AddUserModal';
 import EditUserModal from './components/FormModal/EditUserModal';
+import Footer from './components/Footer/Footer';
 
 const useStyles = makeStyles({
   root: {
     display: 'flex',
     flexDirection: 'column',
+    height: '100vh',
   },
   container: {
     flex: 1,
@@ -23,7 +25,8 @@ const useStyles = makeStyles({
   contentContainer: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100vh',
+    justifyContent: 'space-between',
+    textAlign: 'center',
   },
 });
 
@@ -41,7 +44,7 @@ const App = () => {
   }, [requestStatus]);
 
   useEffect(() => {
-    if (users?.data.length > 0) {
+    if (users?.data) {
       setData(users.data);
     }
   }, [users]);
@@ -50,13 +53,14 @@ const App = () => {
     <div className={classes.root}>
       <Header />
       <Grid container className={classes.container}>
-        <Grid item xs={3}>
+        <Grid item xs={2}>
           <Sidebar />
         </Grid>
-        <Grid item xs={9} className={classes.contentContainer}>
+        <Grid item xs={10} className={classes.contentContainer}>
           <WorkspaceHeader setOpenAddModal={setOpenAddModal} />
           {loading ? <p>Loading...</p>
             : <WorkspaceMain users={data} setOpenEditModal={setOpenEditModal} />}
+          <Footer />
         </Grid>
       </Grid>
       {/* form modals  */}

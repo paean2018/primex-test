@@ -14,7 +14,7 @@ import {
     TextField,
 } from '@material-ui/core';
 
-import { organisationFeatures, roleType } from '../../utils/constants';
+import { countries, organisationFeatures, roleType } from '../../utils/constants';
 import { requestCreateUser } from '../../store/api';
 
 const useStyles = makeStyles(({
@@ -33,7 +33,7 @@ const AddUserModal = ({ openAddModal, setOpenAddModal }) => {
         role: 'Owner',
         organisation: '',
         organisation_features: [],
-        country: '',
+        country: 'Australia',
     });
 
     const handleClose = () => {
@@ -55,8 +55,8 @@ const AddUserModal = ({ openAddModal, setOpenAddModal }) => {
             email: '',
             role: 'Owner',
             organisation: '',
-            organisation_features: ['Trade Vault'],
-            country: '',
+            organisation_features: [],
+            country: 'Australia',
         });
     };
 
@@ -69,6 +69,7 @@ const AddUserModal = ({ openAddModal, setOpenAddModal }) => {
                 <form onSubmit={handleSubmit}>
                     <div>
                         <TextField
+                            type="email"
                             label="Email"
                             onChange={handleData}
                             name="email"
@@ -122,7 +123,7 @@ const AddUserModal = ({ openAddModal, setOpenAddModal }) => {
                             </Select>
                         </FormControl>
                     </Box>
-                    <Box display="flex">
+                    <Box display="flex" paddingTop={2}>
                         <FormControl fullWidth>
                             <InputLabel>Role</InputLabel>
                             <Select
@@ -140,14 +141,23 @@ const AddUserModal = ({ openAddModal, setOpenAddModal }) => {
                                 })}
                             </Select>
                         </FormControl>
-                        <TextField
-                            label="Country"
-                            onChange={handleData}
-                            name="country"
-                            value={data.country}
-                            fullWidth
-                            required
-                        />
+                        <FormControl fullWidth>
+                            <InputLabel>Country</InputLabel>
+                            <Select
+                                value={data.country}
+                                onChange={handleData}
+                                name="country"
+                                required
+                            >
+                                {countries.map((cntry) => {
+                                    return (
+                                        <MenuItem key={cntry} value={cntry}>
+                                            {cntry}
+                                        </MenuItem>
+                                    );
+                                })}
+                            </Select>
+                        </FormControl>
 
                     </Box>
                     <Box paddingTop={5} textAlign="end">

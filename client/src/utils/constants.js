@@ -2,6 +2,8 @@ export const endpoint = 'https://us-central1-primex-test-630fc.cloudfunctions.ne
 
 export const roleType = ['Owner', 'Member'];
 
+export const countries = ['Australia', 'New Zealand'];
+
 export const organisationFeatures = [
     'Trade Vault',
     'Inventory',
