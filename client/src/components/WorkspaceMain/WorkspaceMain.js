@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
@@ -21,7 +22,7 @@ const useStyles = makeStyles({
         padding: 8,
         flex: 1,
         '& .MuiTableContainer-root': {
-            height: '70vh',
+            height: '65vh',
             overflowY: 'auto',
         },
     },
@@ -38,7 +39,7 @@ const WorkspaceMain = ({ users, setOpenEditModal }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const handleGetUser = (userId) => {
         dispatch(requestGetUser(userId));
@@ -64,11 +65,11 @@ const WorkspaceMain = ({ users, setOpenEditModal }) => {
 
     const renderTableRow = () => {
         if (users.length > 0) {
-            return users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .sort((a, b) => {
-                    // eslint-disable-next-line no-underscore-dangle
-                    return new Date(b.createdAt._nanoseconds) - new Date(a.createdAt._nanoseconds);
-                }).map((user) => (
+            return users.sort((userA, userB) => (
+                new Date(-1 * userA.createdAt._seconds).getTime()
+                - new Date(-1 * userB.createdAt._seconds).getTime()
+            )).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((user) => (
                     <TableRow key={user.id}>
                         <TableCell component="th" scope="row" className={classes.capitalizeText}>
                             {`${user.firstName} ${user.lastName}`}
