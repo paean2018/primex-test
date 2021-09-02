@@ -34,7 +34,7 @@ const useStyles = makeStyles({
 });
 
 const WorkspaceMain = ({ users, setOpenEditModal }) => {
-    // console.log('users', users[0]?.createdAt);
+    // eslint-disable-next-line no-underscore-dangle
     const classes = useStyles();
     const dispatch = useDispatch();
     const [page, setPage] = useState(0);
@@ -64,30 +64,46 @@ const WorkspaceMain = ({ users, setOpenEditModal }) => {
 
     const renderTableRow = () => {
         if (users.length > 0) {
-            return users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user) => (
-                <TableRow key={user.id}>
-                    <TableCell component="th" scope="row" className={classes.capitalizeText}>
-                        {`${user.firstName} ${user.lastName}`}
-                    </TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell className={classes.capitalizeText}>{user.role}</TableCell>
-                    <TableCell className={classes.capitalizeText}>{user.organisation}</TableCell>
-                    <TableCell className={classes.capitalizeText}>
-                        {`${user.organisation_features} `}
-                    </TableCell>
-                    <TableCell className={classes.capitalizeText}>{user.country}</TableCell>
-                    <TableCell>
-                        <Edit
-                            className={classes.actionIcon}
-                            onClick={() => handleGetUser(user.id)}
-                        />
-                        <Delete
-                            className={classes.actionIcon}
-                            onClick={() => handleDelete(user.id)}
-                        />
-                    </TableCell>
-                </TableRow>
-            ));
+            return users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .sort((a, b) => {
+                    // eslint-disable-next-line no-underscore-dangle
+                    return new Date(b.createdAt._nanoseconds) - new Date(a.createdAt._nanoseconds);
+                }).map((user) => (
+                    <TableRow key={user.id}>
+                        <TableCell component="th" scope="row" className={classes.capitalizeText}>
+                            {`${user.firstName} ${user.lastName}`}
+                        </TableCell>
+                        <TableCell>{user.email}</TableCell>
+                        <TableCell className={classes.capitalizeText}>
+                            {user.role}
+                        </TableCell>
+                        <TableCell
+                            className={classes.capitalizeText}
+                        >
+                            {user.organisation}
+                        </TableCell>
+                        <TableCell
+                            className={classes.capitalizeText}
+                        >
+                            {`${user.organisation_features} `}
+                        </TableCell>
+                        <TableCell
+                            className={classes.capitalizeText}
+                        >
+                            {user.country}
+                        </TableCell>
+                        <TableCell>
+                            <Edit
+                                className={classes.actionIcon}
+                                onClick={() => handleGetUser(user.id)}
+                            />
+                            <Delete
+                                className={classes.actionIcon}
+                                onClick={() => handleDelete(user.id)}
+                            />
+                        </TableCell>
+                    </TableRow>
+                ));
         }
         return (
             <TableRow>
