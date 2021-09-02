@@ -15,7 +15,7 @@ const Sidebar = () => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <span>Side bar</span>
+            <span>Sidebar Component</span>
         </div>
     );
 };
