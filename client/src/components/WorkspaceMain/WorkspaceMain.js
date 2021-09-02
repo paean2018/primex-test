@@ -106,9 +106,9 @@ const WorkspaceMain = ({ users, setOpenEditModal }) => {
                 </Table>
             </TableContainer>
             <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
+                rowsPerPageOptions={[5, 10, 20]}
                 component="div"
-                count={users.length}
+                count={users.length > 0 ? users.length : 0}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
