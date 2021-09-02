@@ -11,13 +11,7 @@ import {
     TextField,
 } from '@material-ui/core';
 
-const roleType = ['Owner', 'Member'];
-
-const organisationFeatures = [
-    'Trade Vault',
-    'Inventory',
-    'Analytics',
-];
+import { organisationFeatures, roleType } from '../../constants';
 
 const FormModal = ({ open, setOpen }) => {
     const [data, setData] = useState({

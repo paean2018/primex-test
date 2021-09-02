@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { endpoint } from '../../constants';
 
 import {
     getUsers, getUsersFail, getUsersSuccess,
@@ -8,7 +9,7 @@ export function requestGetUsers(params) {
     return (dispatch) => {
         dispatch(getUsers(params));
         // axios.get('')
-        axios.get('https://us-central1-primex-test-630fc.cloudfunctions.net/user')
+        axios.get(endpoint)
             .then((response) => {
                 if (response.error) {
                     throw (response.error);
@@ -25,7 +26,7 @@ export function requestGetUsers(params) {
 export function requestCreateUser(params) {
     return (dispatch) => {
         dispatch(getUsers(params));
-        axios.get('https://us-central1-primex-test-630fc.cloudfunctions.net/user')
+        axios.get(endpoint)
             .then((response) => {
                 if (response.error) {
                     throw (response.error);
