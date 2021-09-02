@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
     makeStyles,
@@ -8,6 +8,7 @@ import {
     TableCell,
     TableContainer,
     TableHead,
+    TablePagination,
     TableRow,
 } from '@material-ui/core';
 import { Edit, Delete } from '@material-ui/icons';
@@ -17,6 +18,7 @@ import { requestDeleteUser, requestGetUser } from '../../store/api';
 const useStyles = makeStyles({
     root: {
         padding: '8px',
+        flex: 1,
     },
     actionIcon: {
         cursor: 'pointer',
@@ -26,6 +28,8 @@ const useStyles = makeStyles({
 const WorkspaceMain = ({ users, setOpenEditModal }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(3);
 
     const handleGetUser = (userId) => {
         dispatch(requestGetUser(userId));
@@ -40,9 +44,18 @@ const WorkspaceMain = ({ users, setOpenEditModal }) => {
         return null;
     };
 
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+
     const renderTableRow = () => {
         if (users.length > 0) {
-            return users.map((user) => (
+            return users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user) => (
                 <TableRow key={user.id}>
                     <TableCell component="th" scope="row">
                         {`${user.firstName} ${user.lastName}`}
@@ -50,7 +63,7 @@ const WorkspaceMain = ({ users, setOpenEditModal }) => {
                     <TableCell>{user.email}</TableCell>
                     <TableCell>{user.role}</TableCell>
                     <TableCell>{user.organisation}</TableCell>
-                    <TableCell>{user.organisation_features}</TableCell>
+                    <TableCell>{`${user.organisation_features} `}</TableCell>
                     <TableCell>{user.country}</TableCell>
                     <TableCell>
                         <Edit
@@ -92,6 +105,15 @@ const WorkspaceMain = ({ users, setOpenEditModal }) => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <TablePagination
+                rowsPerPageOptions={[10, 25, 100]}
+                component="div"
+                count={users.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
         </div>
     );
 };

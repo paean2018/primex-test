@@ -60,7 +60,7 @@ const EditUserModal = ({ openEditModal, setOpenEditModal }) => {
 
     return (
         <div>
-            {data ? (
+            {user ? (
                 <Dialog
                     onClose={handleClose}
                     open={openEditModal}
@@ -163,7 +163,7 @@ const EditUserModal = ({ openEditModal, setOpenEditModal }) => {
                         </form>
                     </div>
                 </Dialog>
-            ) : <p> Loading... </p>}
+            ) : null}
         </div>
     );
 };

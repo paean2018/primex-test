@@ -15,10 +15,15 @@ const useStyles = makeStyles({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '100vh',
   },
   container: {
     flex: 1,
+    marginTop: '50px',
+  },
+  contentContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
   },
 });
 
@@ -36,7 +41,7 @@ const App = () => {
   }, [requestStatus]);
 
   useEffect(() => {
-    if (users?.data) {
+    if (users?.data.length > 0) {
       setData(users.data);
     }
   }, [users]);
@@ -48,7 +53,7 @@ const App = () => {
         <Grid item xs={3}>
           <Sidebar />
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={9} className={classes.contentContainer}>
           <WorkspaceHeader setOpenAddModal={setOpenAddModal} />
           {loading ? <p>Loading...</p>
             : <WorkspaceMain users={data} setOpenEditModal={setOpenEditModal} />}
