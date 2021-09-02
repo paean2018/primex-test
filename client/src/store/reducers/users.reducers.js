@@ -47,18 +47,15 @@ export default function usersReducer(state = INITIAL_STATE, action) {
         case GET_USER:
             return {
                 ...state,
-                loading: true,
             };
         case GET_USER_SUCCESS:
             return {
                 ...state,
                 user: action.payload.data,
-                loading: false,
             };
         case GET_USER_FAIL:
             return {
                 ...state,
-                loading: false,
                 error: action.error,
             };
         case CREATE_USER:

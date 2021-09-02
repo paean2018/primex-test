@@ -120,9 +120,8 @@ export function deleteUserFail(error) {
     };
 }
 
-export function resetRequestStatus(error) {
+export function resetRequestStatus() {
     return {
         type: RESET_REQUEST_STATUS,
-        error,
     };
 }
