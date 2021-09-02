@@ -39,7 +39,7 @@ const WorkspaceMain = ({ users, setOpenEditModal }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const handleGetUser = (userId) => {
         dispatch(requestGetUser(userId));

@@ -10,9 +10,6 @@ const useStyles = makeStyles(({
         padding: 20,
         background: '#fff',
         color: '#000',
-        '& p': {
-            margin: 0,
-        },
     },
 }));
 
@@ -21,7 +18,7 @@ export default function ButtonAppBar() {
 
     return (
         <AppBar className={classes.root}>
-            <p> PrimeX </p>
+            <span> Header Component </span>
         </AppBar>
     );
 }
