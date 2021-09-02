@@ -40,7 +40,7 @@ app.post('/', async (req, res) => {
   const user = req.body;
   await db.collection('users').add({
     ...user,
-    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    createdAt: db.Timestamp.fromDate(),
   });
   res.status(201).send();
 });

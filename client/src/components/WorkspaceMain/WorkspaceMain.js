@@ -34,6 +34,7 @@ const useStyles = makeStyles({
 });
 
 const WorkspaceMain = ({ users, setOpenEditModal }) => {
+    // console.log('users', users[0]?.createdAt);
     const classes = useStyles();
     const dispatch = useDispatch();
     const [page, setPage] = useState(0);
