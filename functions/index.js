@@ -13,7 +13,7 @@ const db = admin.firestore();
 
 // get all
 app.get('/', async (req, res) => {
-  const snapshot = await db.collection('users').orderBy('time').get();
+  const snapshot = await db.collection('users').orderBy('time', 'desc').get();
   const users = [];
 
   snapshot.forEach((doc) => {
