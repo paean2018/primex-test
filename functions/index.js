@@ -40,7 +40,7 @@ app.post('/', async (req, res) => {
   const user = req.body;
   await db.collection('users').add({
     ...user,
-    createdAt: db.Timestamp.fromDate(),
+    createdAt: db.FieldValue.serverTimestamp(),
   });
   res.status(201).send();
 });
