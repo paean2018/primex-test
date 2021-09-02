@@ -54,12 +54,12 @@ const WorkspaceMain = ({ users, setOpenEditModal }) => {
         return null;
     };
 
-    const handleChangePage = (event, newPage) => {
+    const handleChangePage = (e, newPage) => {
         setPage(newPage);
     };
 
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
+    const handleChangeRowsPerPage = (e) => {
+        setRowsPerPage(+e.target.value);
         setPage(0);
     };
 
