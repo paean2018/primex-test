@@ -5,6 +5,9 @@ const useStyles = makeStyles({
     root: {
         borderRight: '1px solid #ccc',
         height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });
 
@@ -12,7 +15,7 @@ const Sidebar = () => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <span>side bar</span>
+            <span>Side bar</span>
         </div>
     );
 };

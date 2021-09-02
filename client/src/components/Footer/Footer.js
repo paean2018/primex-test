@@ -12,7 +12,7 @@ const Footer = () => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <span>footer</span>
+            <span>Footer</span>
         </div>
     );
 };
