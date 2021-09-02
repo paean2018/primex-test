@@ -10,11 +10,11 @@ const useStyles = makeStyles({
     },
 });
 
-const WorkspaceHeader = ({ setOpen }) => {
+const WorkspaceHeader = ({ setOpenAddModal }) => {
     const classes = useStyles();
 
     const handleOpen = () => {
-        setOpen(true);
+        setOpenAddModal(true);
     };
 
     return (
@@ -30,11 +30,11 @@ const WorkspaceHeader = ({ setOpen }) => {
 };
 
 WorkspaceHeader.propTypes = {
-    setOpen: PropTypes.func,
+    setOpenAddModal: PropTypes.func,
 };
 
 WorkspaceHeader.defaultProps = {
-    setOpen: () => {},
+    setOpenAddModal: () => {},
 };
 
 export default WorkspaceHeader;

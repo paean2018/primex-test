@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import PropTypes from 'prop-types';
 import {
@@ -11,21 +12,23 @@ import {
     TextField,
 } from '@material-ui/core';
 
-import { organisationFeatures, roleType } from '../../constants';
+import { organisationFeatures, roleType } from '../../utils/constants';
+import { requestCreateUser } from '../../store/api';
 
-const FormModal = ({ open, setOpen }) => {
+const AddUserModal = ({ openAddModal, setOpenAddModal }) => {
+    const dispatch = useDispatch();
     const [data, setData] = useState({
         firstName: '',
         lastName: '',
         email: '',
         role: 'Owner',
         organisation: '',
-        organisation_features: [],
+        organisation_features: ['Trade Vault'],
         country: '',
     });
 
     const handleClose = () => {
-        setOpen(false);
+        setOpenAddModal(false);
     };
 
     const handleData = (e) => {
@@ -33,10 +36,28 @@ const FormModal = ({ open, setOpen }) => {
         setData({ ...data, [name]: value });
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(requestCreateUser(data));
+        setOpenAddModal(false);
+        setData({
+            firstName: '',
+            lastName: '',
+            email: '',
+            role: 'Owner',
+            organisation: '',
+            organisation_features: ['Trade Vault'],
+            country: '',
+        });
+    };
+
     return (
         <div>
-            <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-                <form>
+            <Dialog
+                onClose={handleClose}
+                open={openAddModal}
+            >
+                <form onSubmit={handleSubmit}>
                     <div>
                         <TextField
                             label="Email"
@@ -65,6 +86,7 @@ const FormModal = ({ open, setOpen }) => {
                             <Select
                                 value={data.role}
                                 onChange={handleData}
+                                name="role"
                             >
                                 {roleType.map((role) => {
                                     return (
@@ -107,7 +129,7 @@ const FormModal = ({ open, setOpen }) => {
                             value={data.country}
                         />
                     </div>
-                    <Button size="small" variant="contained" color="primary">
+                    <Button type="submit" size="small" variant="contained" color="primary">
                         Save
                     </Button>
                 </form>
@@ -116,14 +138,14 @@ const FormModal = ({ open, setOpen }) => {
     );
 };
 
-FormModal.propTypes = {
-    open: PropTypes.bool,
-    setOpen: PropTypes.func,
+AddUserModal.propTypes = {
+    openAddModal: PropTypes.bool,
+    setOpenAddModal: PropTypes.func,
 };
 
-FormModal.defaultProps = {
-    open: false,
-    setOpen: () => {},
+AddUserModal.defaultProps = {
+    openAddModal: false,
+    setOpenAddModal: () => {},
 };
 
-export default FormModal;
+export default AddUserModal;

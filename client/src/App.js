@@ -8,7 +8,8 @@ import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
 import WorkspaceMain from './components/WorkspaceMain/WorkspaceMain';
 import WorkspaceHeader from './components/WorkspaceHeader/WorkspaceHeader';
-import FormModal from './components/FormModal/FormModal';
+import AddUserModal from './components/FormModal/AddUserModal';
+import EditUserModal from './components/FormModal/EditUserModal';
 
 const useStyles = makeStyles({
   root: {
@@ -24,14 +25,15 @@ const useStyles = makeStyles({
 const App = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { users, loading } = useSelector((state) => state.data);
+  const { users, loading, requestStatus } = useSelector((state) => state.data);
 
   const [data, setData] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
 
   useEffect(() => {
     dispatch(requestGetUsers());
-  }, []);
+  }, [requestStatus]);
 
   useEffect(() => {
     if (users?.data) {
@@ -47,12 +49,14 @@ const App = () => {
           <Sidebar />
         </Grid>
         <Grid item xs={9}>
-          <WorkspaceHeader setOpen={setOpen} />
-          {loading ? <p>Loading...</p> : <WorkspaceMain users={data} />}
+          <WorkspaceHeader setOpenAddModal={setOpenAddModal} />
+          {loading ? <p>Loading...</p>
+            : <WorkspaceMain users={data} setOpenEditModal={setOpenEditModal} />}
         </Grid>
       </Grid>
-      {/* form modal  */}
-      <FormModal open={open} setOpen={setOpen} />
+      {/* form modals  */}
+      <AddUserModal openAddModal={openAddModal} setOpenAddModal={setOpenAddModal} />
+      <EditUserModal openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} />
     </div>
   );
 };

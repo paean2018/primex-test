@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import {
     makeStyles,
     Paper,
@@ -11,6 +12,7 @@ import {
 } from '@material-ui/core';
 import { Edit, Delete } from '@material-ui/icons';
 import PropTypes from 'prop-types';
+import { requestDeleteUser, requestGetUser } from '../../store/api';
 
 const useStyles = makeStyles({
     root: {
@@ -21,8 +23,22 @@ const useStyles = makeStyles({
     },
 });
 
-const WorkspaceMain = ({ users }) => {
+const WorkspaceMain = ({ users, setOpenEditModal }) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+
+    const handleGetUser = (userId) => {
+        dispatch(requestGetUser(userId));
+        setOpenEditModal(true);
+    };
+
+    const handleDelete = (userId) => {
+        // eslint-disable-next-line no-alert
+        if (window.confirm('Delete user?')) {
+            return dispatch(requestDeleteUser(userId));
+        }
+        return null;
+    };
 
     const renderTableRow = () => {
         if (users.length > 0) {
@@ -37,8 +53,14 @@ const WorkspaceMain = ({ users }) => {
                     <TableCell>{user.organisation_features}</TableCell>
                     <TableCell>{user.country}</TableCell>
                     <TableCell>
-                        <Edit className={classes.actionIcon} />
-                        <Delete className={classes.actionIcon} />
+                        <Edit
+                            className={classes.actionIcon}
+                            onClick={() => handleGetUser(user.id)}
+                        />
+                        <Delete
+                            className={classes.actionIcon}
+                            onClick={() => handleDelete(user.id)}
+                        />
                     </TableCell>
                 </TableRow>
             ));
@@ -75,14 +97,14 @@ const WorkspaceMain = ({ users }) => {
 };
 
 WorkspaceMain.propTypes = {
-    users: PropTypes.arrayOf(PropTypes.shape({
-        firstName: PropTypes.string,
-        lastName: PropTypes.string,
-    })),
+    // eslint-disable-next-line react/forbid-prop-types
+    users: PropTypes.array,
+    setOpenEditModal: PropTypes.func,
 };
 
 WorkspaceMain.defaultProps = {
     users: [],
+    setOpenEditModal: () => {},
 };
 
 export default WorkspaceMain;
