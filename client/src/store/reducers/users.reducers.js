@@ -19,7 +19,7 @@ import {
 
 const INITIAL_STATE = {
     loading: null,
-    users: null,
+    users: [],
     user: null,
     error: null,
     requestStatus: null,

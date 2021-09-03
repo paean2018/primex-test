@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-closing-bracket-location */
 /* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -71,26 +72,29 @@ const WorkspaceMain = ({ users, setOpenEditModal }) => {
             )).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((user) => (
                     <TableRow key={user.id}>
-                        <TableCell component="th" scope="row" className={classes.capitalizeText}>
+                        <TableCell
+                            component="th"
+                            scope="row"
+                            className={classes.capitalizeText}>
                             {`${user.firstName} ${user.lastName}`}
                         </TableCell>
-                        <TableCell>{user.email}</TableCell>
-                        <TableCell className={classes.capitalizeText}>
+                        <TableCell>
+                            {user.email}
+                        </TableCell>
+                        <TableCell
+                            className={classes.capitalizeText}>
                             {user.role}
                         </TableCell>
                         <TableCell
-                            className={classes.capitalizeText}
-                        >
+                            className={classes.capitalizeText}>
                             {user.organisation}
                         </TableCell>
                         <TableCell
-                            className={classes.capitalizeText}
-                        >
+                            className={classes.capitalizeText}>
                             {`${user.organisation_features} `}
                         </TableCell>
                         <TableCell
-                            className={classes.capitalizeText}
-                        >
+                            className={classes.capitalizeText}>
                             {user.country}
                         </TableCell>
                         <TableCell>

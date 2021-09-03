@@ -1,5 +1,8 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+/* eslint-disable no-useless-escape */
+/* eslint-disable prefer-object-spread */
+/* eslint-disable max-len */
+/* eslint-disable no-use-before-define */
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
@@ -23,7 +26,7 @@ const useStyles = makeStyles(({
     },
 }));
 
-const AddUserModal = ({ openAddModal, setOpenAddModal }) => {
+const FormModal = ({ openModal, setOpenModal }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [data, setData] = useState({
@@ -35,20 +38,59 @@ const AddUserModal = ({ openAddModal, setOpenAddModal }) => {
         organisation_features: [],
         country: 'Australia',
     });
+    const [valid, setValid] = useState(false);
+    const [validEmail, setValidEmail] = useState({});
+
+    useEffect(() => {
+        checkFields();
+        // console.log('data', data);
+    }, [data]);
 
     const handleClose = () => {
-        setOpenAddModal(false);
+        setOpenModal(false);
     };
 
     const handleData = (e) => {
         const { name, value } = e.target;
-        setData({ ...data, [name]: value });
+        if (name === 'email') {
+            const result = validateEmail(value);
+            if (result) {
+                setValidEmail({
+                    status: true,
+                    valid: 'valid',
+                });
+            } else {
+                setValidEmail({
+                    status: false,
+                    valid: 'invalid',
+                });
+            }
+        }
+        return setData({ ...data, [name]: value });
+    };
+
+    const checkFields = () => {
+        const newData = Object.assign({}, data);
+        delete newData.organisation_features; // not required
+        const result = Object.values(newData).every((d) => {
+            return d.length > 0;
+        });
+        if (result && validEmail.status) {
+            return setValid(result);
+        }
+        return setValid(false);
+    };
+
+    const validateEmail = (value) => {
+        const emailValidation = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const result = emailValidation.test(value);
+        return result;
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(requestCreateUser(data));
-        setOpenAddModal(false);
+        setOpenModal(false);
         setData({
             firstName: '',
             lastName: '',
@@ -63,47 +105,55 @@ const AddUserModal = ({ openAddModal, setOpenAddModal }) => {
     return (
         <Dialog
             onClose={handleClose}
-            open={openAddModal}
+            open={openModal}
         >
-            <div className={classes.container}>
+            <Box className={classes.container}>
                 <form onSubmit={handleSubmit}>
-                    <div>
-                        <TextField
-                            type="email"
-                            label="Email"
-                            onChange={handleData}
-                            name="email"
-                            value={data.email}
-                            fullWidth
-                            required
-                        />
-                    </div>
-                    <Box display="flex">
-                        <TextField
-                            label="First Name"
-                            onChange={handleData}
-                            name="firstName"
-                            value={data.firstName}
-                            fullWidth
-                            required
-                        />
-                        <TextField
-                            label="Last Name"
-                            onChange={handleData}
-                            name="lastName"
-                            value={data.lastName}
-                            fullWidth
-                            required
-                        />
+                    <Box>
+                        <FormControl fullWidth>
+                            <TextField
+                                type="email"
+                                label="Email"
+                                onChange={handleData}
+                                name="email"
+                                value={data.email}
+                                error={validEmail?.valid === 'invalid'}
+                                helperText={validEmail?.valid === 'invalid' ? 'Invalid Email' : ''}
+                                required
+                            />
+                        </FormControl>
                     </Box>
-                    <TextField
-                        label="Organisation"
-                        onChange={handleData}
-                        name="organisation"
-                        value={data.organisation}
-                        fullWidth
-                        required
-                    />
+                    <Box display="flex">
+                        <FormControl fullWidth>
+                            <TextField
+                                label="First Name"
+                                onChange={handleData}
+                                name="firstName"
+                                value={data.firstName}
+                                required
+                            />
+                        </FormControl>
+                        <FormControl fullWidth>
+                            <TextField
+                                label="Last Name"
+                                onChange={handleData}
+                                name="lastName"
+                                value={data.lastName}
+                                required
+                            />
+                        </FormControl>
+                    </Box>
+                    <Box>
+                        <FormControl fullWidth>
+                            <TextField
+                                label="Organisation"
+                                onChange={handleData}
+                                name="organisation"
+                                value={data.organisation}
+                                required
+                            />
+                        </FormControl>
+                    </Box>
                     <Box>
                         <FormControl fullWidth>
                             <InputLabel>Organisation Feature</InputLabel>
@@ -158,27 +208,32 @@ const AddUserModal = ({ openAddModal, setOpenAddModal }) => {
                                 })}
                             </Select>
                         </FormControl>
-
                     </Box>
                     <Box paddingTop={5} textAlign="end">
-                        <Button type="submit" size="small" variant="contained" color="primary">
+                        <Button
+                            type="submit"
+                            size="small"
+                            variant="contained"
+                            color="primary"
+                            disabled={!valid}
+                        >
                             Save
                         </Button>
                     </Box>
                 </form>
-            </div>
+            </Box>
         </Dialog>
     );
 };
 
-AddUserModal.propTypes = {
-    openAddModal: PropTypes.bool,
-    setOpenAddModal: PropTypes.func,
+FormModal.propTypes = {
+    openModal: PropTypes.bool,
+    setOpenModal: PropTypes.func,
 };
 
-AddUserModal.defaultProps = {
-    openAddModal: false,
-    setOpenAddModal: () => {},
+FormModal.defaultProps = {
+    openModal: false,
+    setOpenModal: () => {},
 };
 
-export default AddUserModal;
+export default FormModal;
