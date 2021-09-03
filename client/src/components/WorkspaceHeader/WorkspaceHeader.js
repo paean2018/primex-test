@@ -27,7 +27,12 @@ const WorkspaceHeader = ({ setOpenModal }) => {
     const classes = useStyles();
 
     const handleOpen = () => {
-        setOpenModal(true);
+        setOpenModal(
+            {
+                status: true,
+                type: 'add',
+            },
+        );
     };
 
     return (

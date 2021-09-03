@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
+    Box,
     makeStyles,
     Paper,
     Table,
@@ -35,7 +36,7 @@ const useStyles = makeStyles({
     },
 });
 
-const WorkspaceMain = ({ users, setOpenEditModal }) => {
+const WorkspaceMain = ({ users, setOpenModal }) => {
     // eslint-disable-next-line no-underscore-dangle
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -44,7 +45,12 @@ const WorkspaceMain = ({ users, setOpenEditModal }) => {
 
     const handleGetUser = (userId) => {
         dispatch(requestGetUser(userId));
-        setOpenEditModal(true);
+        setOpenModal(
+            {
+                status: true,
+                type: 'edit',
+            },
+        );
     };
 
     const handleDelete = (userId) => {
@@ -98,14 +104,19 @@ const WorkspaceMain = ({ users, setOpenEditModal }) => {
                             {user.country}
                         </TableCell>
                         <TableCell>
-                            <Edit
-                                className={classes.actionIcon}
-                                onClick={() => handleGetUser(user.id)}
-                            />
-                            <Delete
-                                className={classes.actionIcon}
-                                onClick={() => handleDelete(user.id)}
-                            />
+                            <Box display="flex">
+                                <Box onClick={() => handleGetUser(user.id)}>
+                                    <Edit
+                                        className={classes.actionIcon}
+
+                                    />
+                                </Box>
+                                <Box onClick={() => handleDelete(user.id)}>
+                                    <Delete
+                                        className={classes.actionIcon}
+                                    />
+                                </Box>
+                            </Box>
                         </TableCell>
                     </TableRow>
                 ));
@@ -155,12 +166,12 @@ const WorkspaceMain = ({ users, setOpenEditModal }) => {
 WorkspaceMain.propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
     users: PropTypes.array,
-    setOpenEditModal: PropTypes.func,
+    setOpenModal: PropTypes.func,
 };
 
 WorkspaceMain.defaultProps = {
     users: [],
-    setOpenEditModal: () => {},
+    setOpenModal: () => {},
 };
 
 export default WorkspaceMain;

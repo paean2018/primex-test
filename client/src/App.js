@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Grid, makeStyles } from '@material-ui/core';
+import { Box, Grid, makeStyles } from '@material-ui/core';
 
 import { requestGetUsers } from './store/api';
 
@@ -27,6 +27,9 @@ const useStyles = makeStyles({
     justifyContent: 'space-between',
     textAlign: 'center',
   },
+  loadingContainer: {
+    height: '65vh',
+  },
 });
 
 const App = () => {
@@ -34,7 +37,10 @@ const App = () => {
   const dispatch = useDispatch();
   const { users, loading, requestStatus } = useSelector((state) => state.data);
 
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState({
+    status: false,
+    type: '',
+  });
 
   useEffect(() => {
     dispatch(requestGetUsers());
@@ -49,8 +55,12 @@ const App = () => {
         </Grid>
         <Grid item xs={10} className={classes.contentContainer}>
           <WorkspaceHeader setOpenModal={setOpenModal} />
-          {loading ? <p>Loading...</p>
-            : <WorkspaceMain users={users.data} setOpen={setOpenModal} />}
+          {loading ? (
+            <Box className={classes.loadingContainer}>
+              <p> Loading... </p>
+            </Box>
+          )
+            : <WorkspaceMain users={users.data} setOpenModal={setOpenModal} />}
           <Footer />
         </Grid>
       </Grid>
