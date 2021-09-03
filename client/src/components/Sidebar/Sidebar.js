@@ -23,11 +23,12 @@ const Sidebar = ({ masterRecords, activeRecord, setActiveRecord }) => {
     return (
         <Box className={classes.root}>
             {masterRecords.map((record) => (
-                <Box className={record === activeRecord ? classes.activeRecord
-                    : classes.notActiveRecord}
+                <Box key={record}
+                    className={record === activeRecord ? classes.activeRecord
+                        : classes.notActiveRecord}
                     onClick={() => setActiveRecord(record)}
                 >
-                    <p key={record}>
+                    <p>
                         {record}
                     </p>
                 </Box>
