@@ -43,7 +43,7 @@ const App = () => {
     type: '',
   });
   const [masterRecords] = useState(masterRecordLists || []);
-  const [activeRecord, setActiveRecord] = useState('');
+  const [activeRecord, setActiveRecord] = useState('Master Record 1');
 
   useEffect(() => {
     dispatch(requestGetUsers());
