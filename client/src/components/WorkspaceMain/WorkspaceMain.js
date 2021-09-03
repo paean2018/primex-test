@@ -70,7 +70,7 @@ const WorkspaceMain = ({ users, setOpenModal }) => {
     };
 
     const handleConfirmDelete = () => {
-        return dispatch(requestDeleteUser(deleteId));
+        dispatch(requestDeleteUser(deleteId));
     };
 
     const handleDelete = (id) => {
