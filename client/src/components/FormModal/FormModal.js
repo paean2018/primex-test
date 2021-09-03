@@ -28,7 +28,7 @@ import { requestCreateUser, requestEditUser } from '../../store/api';
 const useStyles = makeStyles(({
     container: {
         padding: 25,
-        width: 350,
+        width: 380,
     },
 }));
 
@@ -124,7 +124,7 @@ const FormModal = ({ openModal, setOpenModal }) => {
             >
                 <Box className={classes.container}>
                     <form onSubmit={handleSubmit}>
-                        <Box>
+                        <Box paddingTop={2}>
                             <FormControl fullWidth>
                                 <TextField
                                     type="email"
@@ -138,7 +138,7 @@ const FormModal = ({ openModal, setOpenModal }) => {
                                 />
                             </FormControl>
                         </Box>
-                        <Box display="flex" justifyContent="space-between">
+                        <Box paddingTop={2} display="flex" justifyContent="space-between">
                             <FormControl>
                                 <TextField
                                     label="First Name"
@@ -158,7 +158,7 @@ const FormModal = ({ openModal, setOpenModal }) => {
                                 />
                             </FormControl>
                         </Box>
-                        <Box>
+                        <Box paddingTop={2}>
                             <FormControl fullWidth>
                                 <TextField
                                     label="Organisation"
@@ -169,7 +169,7 @@ const FormModal = ({ openModal, setOpenModal }) => {
                                 />
                             </FormControl>
                         </Box>
-                        <Box>
+                        <Box paddingTop={2}>
                             <FormControl fullWidth>
                                 <InputLabel>Organisation Feature</InputLabel>
                                 <Select
@@ -188,7 +188,7 @@ const FormModal = ({ openModal, setOpenModal }) => {
                                 </Select>
                             </FormControl>
                         </Box>
-                        <Box>
+                        <Box paddingTop={2}>
                             <FormControl fullWidth>
                                 <InputLabel>Role</InputLabel>
                                 <Select
@@ -207,7 +207,7 @@ const FormModal = ({ openModal, setOpenModal }) => {
                                 </Select>
                             </FormControl>
                         </Box>
-                        <Box>
+                        <Box paddingTop={2}>
                             <FormControl fullWidth>
                                 <InputLabel>Country</InputLabel>
                                 <Select
