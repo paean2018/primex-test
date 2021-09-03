@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, Grid, makeStyles } from '@material-ui/core';
 
 import { requestGetUsers } from './store/api';
+import { masterRecordLists } from './utils/constants';
 
 import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -41,6 +42,8 @@ const App = () => {
     status: false,
     type: '',
   });
+  const [masterRecords] = useState(masterRecordLists || []);
+  const [activeRecord, setActiveRecord] = useState('');
 
   useEffect(() => {
     dispatch(requestGetUsers());
@@ -51,7 +54,11 @@ const App = () => {
       <Header />
       <Grid container className={classes.container}>
         <Grid item xs={2}>
-          <Sidebar />
+          <Sidebar
+            masterRecords={masterRecords}
+            activeRecord={activeRecord}
+            setActiveRecord={setActiveRecord}
+          />
         </Grid>
         <Grid item xs={10} className={classes.contentContainer}>
           <WorkspaceHeader setOpenModal={setOpenModal} />

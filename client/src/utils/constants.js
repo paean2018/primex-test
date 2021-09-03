@@ -19,3 +19,5 @@ export const organisationFeatures = [
     'Inventory',
     'Analytics',
 ];
+
+export const masterRecordLists = ['Master Record 1', 'Master Record 2', 'Master Record 3'];
