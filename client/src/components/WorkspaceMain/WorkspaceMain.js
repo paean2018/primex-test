@@ -4,6 +4,11 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
     Box,
+    Button,
+    Dialog,
+    DialogContent,
+    DialogContentText,
+    DialogActions,
     makeStyles,
     Paper,
     Table,
@@ -42,6 +47,8 @@ const WorkspaceMain = ({ users, setOpenModal }) => {
     const dispatch = useDispatch();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [deleteId, setDeleteId] = useState();
+    const [open, setOpen] = useState(false);
 
     const handleGetUser = (userId) => {
         dispatch(requestGetUser(userId));
@@ -53,12 +60,22 @@ const WorkspaceMain = ({ users, setOpenModal }) => {
         );
     };
 
-    const handleDelete = (userId) => {
-        // eslint-disable-next-line no-alert
-        if (window.confirm('Delete user?')) {
-            return dispatch(requestDeleteUser(userId));
-        }
-        return null;
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+        setDeleteId();
+    };
+
+    const handleConfirmDelete = () => {
+        return dispatch(requestDeleteUser(deleteId));
+    };
+
+    const handleDelete = (id) => {
+        setDeleteId(id);
+        handleClickOpen();
     };
 
     const handleChangePage = (e, newPage) => {
@@ -159,6 +176,28 @@ const WorkspaceMain = ({ users, setOpenModal }) => {
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
+
+            {/* modal delete confirmation */}
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                maxWidth="sm"
+                fullWidth
+            >
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description">
+                        Are you sure you want to delete user?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        No
+                    </Button>
+                    <Button onClick={handleConfirmDelete} variant="contained" color="primary">
+                        Yes
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 };
