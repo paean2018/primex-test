@@ -12,9 +12,11 @@ const useStyles = makeStyles({
     activeRecord: {
         background: '#D3F2E0',
         padding: 10,
+        cursor: 'pointer',
     },
     notActiveRecord: {
         padding: 10,
+        cursor: 'pointer',
     },
 });
 
