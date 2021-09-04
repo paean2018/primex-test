@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar } from '@material-ui/core';
+import { AppBar, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(({
     root: {
@@ -13,12 +13,14 @@ const useStyles = makeStyles(({
     },
 }));
 
-export default function ButtonAppBar() {
+const Header = () => {
     const classes = useStyles();
 
     return (
         <AppBar className={classes.root}>
-            <span> Header Component </span>
+            <Typography variant="h6">Header Component</Typography>
         </AppBar>
     );
-}
+};
+
+export default Header;

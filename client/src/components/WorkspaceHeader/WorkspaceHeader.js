@@ -4,6 +4,7 @@ import {
     Box,
     Button,
     makeStyles,
+    Typography,
 } from '@material-ui/core';
 
 import PropTypes from 'prop-types';
@@ -17,13 +18,14 @@ const useStyles = makeStyles({
         color: '#fff',
         padding: '8px 15px',
         fontWeight: 'bold',
+        borderRadius: 0,
         '&:hover': {
             background: '#1bb752',
         },
     },
 });
 
-const WorkspaceHeader = ({ setOpenModal }) => {
+const WorkspaceHeader = ({ activeRecord, setOpenModal }) => {
     const classes = useStyles();
 
     const handleOpen = () => {
@@ -38,14 +40,14 @@ const WorkspaceHeader = ({ setOpenModal }) => {
     return (
         <AppBar position="sticky" className={classes.root}>
             <Box display="flex" justifyContent="space-between" alignItems="center">
-                <p>Master Record 1</p>
+                <Typography variant="subtitle1">{activeRecord}</Typography>
                 <Button
                     size="small"
                     variant="contained"
                     onClick={handleOpen}
                     className={classes.customButton}
                 >
-                    Add user
+                    <Typography variant="body">Add User</Typography>
                 </Button>
             </Box>
         </AppBar>
@@ -54,10 +56,12 @@ const WorkspaceHeader = ({ setOpenModal }) => {
 
 WorkspaceHeader.propTypes = {
     setOpenModal: PropTypes.func,
+    activeRecord: PropTypes.string,
 };
 
 WorkspaceHeader.defaultProps = {
     setOpenModal: () => {},
+    activeRecord: '',
 };
 
 export default WorkspaceHeader;

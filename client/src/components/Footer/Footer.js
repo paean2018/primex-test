@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import { Box, makeStyles, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
@@ -17,11 +17,11 @@ const useStyles = makeStyles({
 const Footer = () => {
     const classes = useStyles();
     return (
-        <div className={classes.root}>
-            <div className={classes.container}>
-                <span>Footer Component</span>
-            </div>
-        </div>
+        <Box className={classes.root}>
+            <Box className={classes.container}>
+                <Typography variant="subtitle2">Footer Component</Typography>
+            </Box>
+        </Box>
     );
 };
 

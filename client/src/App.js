@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Grid, makeStyles } from '@material-ui/core';
+import {
+  Box,
+  CircularProgress,
+  Grid,
+  makeStyles,
+} from '@material-ui/core';
 
 import { requestGetUsers } from './store/api';
-import { masterRecordLists } from './utils/constants';
+import { masterRecordLists, defaultOpenModalProps } from './utils/constants';
 
 import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -38,11 +43,8 @@ const App = () => {
   const dispatch = useDispatch();
   const { users, loading, requestStatus } = useSelector((state) => state.data);
 
-  const [openModal, setOpenModal] = useState({
-    status: false,
-    type: '',
-  });
-  const [masterRecords] = useState(masterRecordLists || []);
+  const [openModal, setOpenModal] = useState(defaultOpenModalProps);
+  const [masterRecords] = useState(masterRecordLists);
   const [activeRecord, setActiveRecord] = useState('Master Record 1');
 
   useEffect(() => {
@@ -50,7 +52,7 @@ const App = () => {
   }, [requestStatus]);
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <Header />
       <Grid container className={classes.container}>
         <Grid item xs={2}>
@@ -61,19 +63,19 @@ const App = () => {
           />
         </Grid>
         <Grid item xs={10} className={classes.contentContainer}>
-          <WorkspaceHeader setOpenModal={setOpenModal} />
+          <WorkspaceHeader activeRecord={activeRecord} setOpenModal={setOpenModal} />
           {loading ? (
             <Box className={classes.loadingContainer}>
-              <p> Loading... </p>
+              <CircularProgress />
             </Box>
           )
             : <WorkspaceMain users={users.data} setOpenModal={setOpenModal} />}
           <Footer />
         </Grid>
       </Grid>
-      {/* form modals  */}
+      {/* form modal  */}
       <FormModal openModal={openModal} setOpenModal={setOpenModal} />
-    </div>
+    </Box>
   );
 };
 

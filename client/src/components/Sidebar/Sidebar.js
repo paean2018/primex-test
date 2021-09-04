@@ -1,7 +1,6 @@
-/* eslint-disable react/jsx-first-prop-new-line */
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
-import { Box, makeStyles } from '@material-ui/core';
+import { Box, makeStyles, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles({
@@ -11,11 +10,11 @@ const useStyles = makeStyles({
     },
     activeRecord: {
         background: '#D3F2E0',
-        padding: 10,
+        padding: 15,
         cursor: 'pointer',
     },
     notActiveRecord: {
-        padding: 10,
+        padding: 15,
         cursor: 'pointer',
     },
 });
@@ -25,14 +24,13 @@ const Sidebar = ({ masterRecords, activeRecord, setActiveRecord }) => {
     return (
         <Box className={classes.root}>
             {masterRecords.map((record) => (
-                <Box key={record}
+                <Box
+                    key={record}
                     className={record === activeRecord ? classes.activeRecord
                         : classes.notActiveRecord}
                     onClick={() => setActiveRecord(record)}
                 >
-                    <p>
-                        {record}
-                    </p>
+                    <Typography variant="subtitle1">{record}</Typography>
                 </Box>
             ))}
         </Box>

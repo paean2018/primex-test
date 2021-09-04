@@ -1,5 +1,7 @@
-/* eslint-disable react/jsx-closing-bracket-location */
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
+
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
@@ -32,17 +34,19 @@ const useStyles = makeStyles({
             height: '65vh',
             overflowY: 'auto',
         },
+        '& th': {
+            fontWeight: 'bold',
+        },
+        '& td:not(:nth-child(2))': {
+            textTransform: 'capitalize',
+        },
     },
-    actionIcon: {
+    actionIconContainer: {
         cursor: 'pointer',
-    },
-    capitalizeText: {
-        textTransform: 'capitalize',
     },
 });
 
 const WorkspaceMain = ({ users, setOpenModal }) => {
-    // eslint-disable-next-line no-underscore-dangle
     const classes = useStyles();
     const dispatch = useDispatch();
     const [page, setPage] = useState(0);
@@ -95,43 +99,37 @@ const WorkspaceMain = ({ users, setOpenModal }) => {
             )).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((user) => (
                     <TableRow key={user.id}>
-                        <TableCell
-                            component="th"
-                            scope="row"
-                            className={classes.capitalizeText}>
+                        <TableCell>
                             {`${user.firstName} ${user.lastName}`}
                         </TableCell>
                         <TableCell>
                             {user.email}
                         </TableCell>
-                        <TableCell
-                            className={classes.capitalizeText}>
+                        <TableCell>
                             {user.role}
                         </TableCell>
-                        <TableCell
-                            className={classes.capitalizeText}>
+                        <TableCell>
                             {user.organisation}
                         </TableCell>
-                        <TableCell
-                            className={classes.capitalizeText}>
+                        <TableCell>
                             {`${user.organisation_features} `}
                         </TableCell>
-                        <TableCell
-                            className={classes.capitalizeText}>
+                        <TableCell>
                             {user.country}
                         </TableCell>
                         <TableCell>
                             <Box display="flex">
-                                <Box onClick={() => handleGetUser(user.id)}>
-                                    <Edit
-                                        className={classes.actionIcon}
-
-                                    />
+                                <Box
+                                    onClick={() => handleGetUser(user.id)}
+                                    className={classes.actionIconContainer}
+                                >
+                                    <Edit />
                                 </Box>
-                                <Box onClick={() => handleDelete(user.id)}>
-                                    <Delete
-                                        className={classes.actionIcon}
-                                    />
+                                <Box
+                                    onClick={() => handleDelete(user.id)}
+                                    className={classes.actionIconContainer}
+                                >
+                                    <Delete />
                                 </Box>
                             </Box>
                         </TableCell>
@@ -148,62 +146,67 @@ const WorkspaceMain = ({ users, setOpenModal }) => {
     };
 
     return (
-        <div className={classes.root}>
-            <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Role</TableCell>
-                            <TableCell>Organisation</TableCell>
-                            <TableCell>Organisation Features</TableCell>
-                            <TableCell>Country</TableCell>
-                            <TableCell />
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {renderTableRow()}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[5, 10, 20]}
-                component="div"
-                count={users.length > 0 ? users.length : 0}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+        <Box className={classes.root}>
+            <Box>
+                <TableContainer component={Paper}>
+                    <Table className={classes.table}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Name</TableCell>
+                                <TableCell>Email</TableCell>
+                                <TableCell>Role</TableCell>
+                                <TableCell>Organisation</TableCell>
+                                <TableCell>Organisation Features</TableCell>
+                                <TableCell>Country</TableCell>
+                                <TableCell />
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {renderTableRow()}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Box>
+            <Box>
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 20]}
+                    component="div"
+                    count={users.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+            </Box>
 
-            {/* modal delete confirmation */}
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                maxWidth="sm"
-                fullWidth
-            >
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description">
-                        Are you sure you want to delete user?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        No
-                    </Button>
-                    <Button onClick={handleConfirmDelete} variant="contained" color="primary">
-                        Yes
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </div>
+            {/* Modal Delete Confirmation */}
+            <Box>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    maxWidth="sm"
+                    fullWidth
+                >
+                    <DialogContent>
+                        <DialogContentText>
+                            Are you sure you want to delete user?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                            No
+                        </Button>
+                        <Button onClick={handleConfirmDelete} variant="contained" color="primary">
+                            Yes
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </Box>
+        </Box>
     );
 };
 
 WorkspaceMain.propTypes = {
-    // eslint-disable-next-line react/forbid-prop-types
     users: PropTypes.array,
     setOpenModal: PropTypes.func,
 };
